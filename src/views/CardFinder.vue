@@ -8,6 +8,7 @@
                 <li><label>Color <input type="text" placeholder="Green"></label></li>
                 <li><label>Type <input type="text" placeholder="Creature"></label></li>
             </ul>
+            <p>{{}}</p>
         </form>
     </div>
 </template>
@@ -18,10 +19,26 @@
     export default {
         name: "CardFinder",
         data () {
-            //Fill Later
+            return {
+
+            }
         },
         methods: {
-            //fill later
+            findCards: function () {
+                this.results = null;
+                axios.get('https://api.magicthegathering.io/',{
+                    params: {
+                        name: this.cardName
+                    }
+                })
+                .then(response =>{
+                    this.results = response.data
+                })
+                .catch(error =>{
+                    this.errors.push(error)
+                })
+
+            }
         }
     }
 </script>
