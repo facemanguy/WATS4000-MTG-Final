@@ -10,7 +10,7 @@
             </ul>
             
         </form>
-        <ul v-if="results.length > 0" class="results">
+        <ul  class="results">
             <li v-for="(card, index) in results.list" :key="index">
             <p>{{results.name}}</p>
             </li>
@@ -20,6 +20,7 @@
 
 <script>
     import axios from 'axios';
+    const mtg = require('mtgsdk')
 
     export default {
         name: "finder",
@@ -32,14 +33,20 @@
         },
         methods: {
             findCards: function () {
+                /*mtg.card.where({ name: 'cardName'})
+                .then(cards =>{
+                    console.log(cards[0].name)
+                })*/
+
                 //this.results = null;
-                axios.get('https://api.magicthegathering.io/',{
+                axios.get('https://api.magicthegathering.io/v1/cards/',{
                     params: {
                         name: this.cardName
                     }
                 })
                 .then(response =>{
                     this.results = response.data
+                    console.log(response)
                 })
                 .catch(error =>{
                     this.errors.push(error)
