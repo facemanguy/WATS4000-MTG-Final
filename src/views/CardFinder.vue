@@ -10,20 +10,27 @@
             </ul>
             
         </form>
-        <ul  class="results">
+        <!-- <ul  class="results">
             <li v-for="(card, index) in results.list" :key="index">
             <p>{{results.name}}</p>
             </li>
-        </ul>
+        </ul> -->
+
+        <!-- <li v-for="item in results.cards" :key="item.id">{{item.name}}<img :src="item.imageUrl"></li> -->
+        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl"></CardViewer>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import CardViewer from '@/components/CardViewer'
     const mtg = require('mtgsdk')
 
     export default {
         name: "finder",
+        components: {
+            CardViewer
+        },
         data () {
             return {
                 results: [],
@@ -33,12 +40,6 @@
         },
         methods: {
             findCards: function () {
-                /*mtg.card.where({ name: 'cardName'})
-                .then(cards =>{
-                    console.log(cards[0].name)
-                })*/
-
-                //this.results = null;
                 axios.get('https://api.magicthegathering.io/v1/cards/',{
                     params: {
                         name: this.cardName
