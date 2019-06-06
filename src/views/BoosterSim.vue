@@ -1,21 +1,17 @@
 <template>
-    <div class="finder">
-        <h1>Magic: The Gathering Card Finder</h1>
-        <form v-on:submit.prevent="findCards">
-            <p>Look for a card by filling out the form below</p>
+    <div class="simulator">
+        <h1>Magic: The Gathering Booster Pack Simulator</h1>
+        <form v-on:submit.prevent="getPack">
+            <p>Pick a set to generate a random Booster Pack</p>
             <ul>
-                <li><label>Name <input v-model="cardName" placeholder="Nissa"></label></li>
-                <li><label>CMC <input v-model="cardCMC" type="number" placeholder="5"></label></li>
-                <li><label>Type <input v-model="cardType" type="text" placeholder="Creature"></label></li>
+                <li><label>Name <input v-model="setName" placeholder="Core2015"></label></li>
             </ul>
             <button type="submit">Go</button>
         </form>
 
-        <router-link to="/boosterSim">Try the Booster Pack Simulator</router-link>
-
         <div class="results-message">
             <loader v-if="showLoader === true"></loader>
-            <div v-else-if="searches !==0 && results.cards.length === 0" class="no-results">
+            <div v-else-if="searches !==0" class="no-results">
                 <h2>No Cards Found</h2>
                 <p>Please adjust your search and try again</p>
             </div>
@@ -25,7 +21,7 @@
         </div>
         
         <transition-group name="fade" tag="div" appear>
-        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl" :cmc="item.cmc" :type="item.types"></CardViewer>
+        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl"></CardViewer>
         </transition-group>
     </div>
 </template>
@@ -41,7 +37,7 @@
     import CircleLoader from '@/components/CircleLoader';
 
     export default {
-        name: "finder",
+        name: "simulator",
         components: {
             CardViewer,
             'message-container': MessageContainer,
@@ -51,23 +47,16 @@
             return {
                 results: [],
                 messages: [],
-                cardName: '',
-                cardCMC: null,
+                setName: '',
                 searches: 0,
-                showLoader: false,
-                cardType: ''
+                showLoader: false
             }
         },
         methods: {
-            findCards: function () {
+            getPack: function () {
                 this.showLoader = true;
-                axios.get('https://api.magicthegathering.io/v1/cards/',{
-                    params: {
-                        name: this.cardName,
-                        cmc: this.cardCMC,
-                        type: this.cardType
-                    }
-                })
+                //TODO: add variable mid url call
+                axios.get('https://api.magicthegathering.io/v1/sets/'+'{setName}'+'/booster')
                 .then(response =>{
                     this.results = response.data
                     console.log(response)
