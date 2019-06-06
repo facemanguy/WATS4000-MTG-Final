@@ -3,9 +3,15 @@
         <h1>Magic: The Gathering Booster Pack Simulator</h1>
         <form v-on:submit.prevent="getPack">
             <p>Pick a set to generate a random Booster Pack</p>
-            <ul>
+            <!-- <ul>
                 <li><label>Name <input v-model="setName" type="text" placeholder="Core2015"></label></li>
-            </ul>
+            </ul> -->
+            <select v-model.trim="setName">
+                <option v-for="option in setOptions" :key="option.id" v-bind:value="option.value">
+                    {{ option.text }}
+                </option>
+            </select>
+            <span>SetCode: {{setName}}</span>
             <button type="submit">Go</button>
         </form>
 
@@ -51,7 +57,14 @@
                 messages: [],
                 setName: '',
                 searches: 0,
-                showLoader: false
+                showLoader: false,
+                selected: 'none',
+                setOptions: [
+                { text: 'Khans of Tarkir', value: 'ktk' },
+                { text: 'Shadows over Innistrad', value: 'soi' },
+                { text: 'Dark Ascenscion', value: 'dka' },
+                { text: 'Magic 2014', value: 'M14'}
+                ]
             }
         },
         methods: {
