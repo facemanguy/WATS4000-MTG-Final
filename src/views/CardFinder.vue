@@ -4,7 +4,7 @@
         <form v-on:submit.prevent="findCards">
             <p>Look for a card by filling out the form below</p>
             <ul>
-                <li><label>Name <input v-model="cardName" placeholder="Nissa"></label></li>
+                <li><label>Name <input v-model="cardName" type="text" placeholder="Nissa"></label></li>
                 <li><label>CMC <input v-model="cardCMC" type="number" placeholder="5"></label></li>
                 <li><label>Type <input v-model="cardType" type="text" placeholder="Creature"></label></li>
             </ul>

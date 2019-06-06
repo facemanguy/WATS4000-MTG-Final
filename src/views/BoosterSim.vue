@@ -4,14 +4,16 @@
         <form v-on:submit.prevent="getPack">
             <p>Pick a set to generate a random Booster Pack</p>
             <ul>
-                <li><label>Name <input v-model="setName" placeholder="Core2015"></label></li>
+                <li><label>Name <input v-model="setName" type="text" placeholder="Core2015"></label></li>
             </ul>
             <button type="submit">Go</button>
         </form>
 
+        <router-link to="/">Go back to Card Search</router-link>
+
         <div class="results-message">
             <loader v-if="showLoader === true"></loader>
-            <div v-else-if="searches !==0" class="no-results">
+            <div v-else-if="searches !==0 && results.cards.length === 0" class="no-results">
                 <h2>No Cards Found</h2>
                 <p>Please adjust your search and try again</p>
             </div>
@@ -55,8 +57,8 @@
         methods: {
             getPack: function () {
                 this.showLoader = true;
-                //TODO: add variable mid url call
-                axios.get('https://api.magicthegathering.io/v1/sets/'+'{setName}'+'/booster')
+                //Note: Backticks are needed to make variable call
+                axios.get('https://api.magicthegathering.io/v1/sets/'+`${this.setName}`+'/booster')
                 .then(response =>{
                     this.results = response.data
                     console.log(response)
