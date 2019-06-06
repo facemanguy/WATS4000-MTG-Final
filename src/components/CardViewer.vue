@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <img v-if="image !== undefined" :src="image">
-        <div v-else>Not Available</div>
+        <div v-else><img src="../../card-back.jpg"></div>
         <h4> {{name}} </h4>
     </div>
 </template>

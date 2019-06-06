@@ -4,11 +4,11 @@
         <form v-on:submit.prevent="findCards">
             <p>Look for a card by filling out the form below</p>
             <ul>
-                <li><label>Name <input v-model="cardName" placeholder="Nissa"></label><button type="submit">Go</button></li>
-                <li><label>Color <input type="text" placeholder="Green"></label></li>
-                <li><label>Type <input type="text" placeholder="Creature"></label></li>
+                <li><label>Name <input v-model="cardName" placeholder="Nissa"></label></li>
+                <li><label>CMC <input v-model="cardCMC" type="number" placeholder="5"></label></li>
+                <li><label>Type <input v-model="cardType" type="text" placeholder="Creature"></label></li>
             </ul>
-            
+            <button type="submit">Go</button>
         </form>
 
         <div class="results-message">
@@ -23,7 +23,7 @@
         </div>
         
         <transition-group name="fade" tag="div" appear>
-        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl"></CardViewer>
+        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl" :cmc="item.cmc" :type="item.types"></CardViewer>
         </transition-group>
     </div>
 </template>
@@ -50,8 +50,10 @@
                 results: [],
                 messages: [],
                 cardName: '',
+                cardCMC: null,
                 searches: 0,
-                showLoader: false
+                showLoader: false,
+                cardType: ''
             }
         },
         methods: {
@@ -59,7 +61,9 @@
                 this.showLoader = true;
                 axios.get('https://api.magicthegathering.io/v1/cards/',{
                     params: {
-                        name: this.cardName
+                        name: this.cardName,
+                        cmc: this.cardCMC,
+                        type: this.cardType
                     }
                 })
                 .then(response =>{
