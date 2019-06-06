@@ -12,7 +12,8 @@
     "core-js": "^2.6.5",
     "mtgsdk": "^0.4.3",
     "vue": "^2.6.10",
-    "vue-router": "^3.0.6"
+    "vue-router": "^3.0.6",
+    "vue2-animate": "^2.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

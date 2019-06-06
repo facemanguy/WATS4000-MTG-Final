@@ -10,32 +10,45 @@
             </ul>
             
         </form>
-        <!-- <ul  class="results">
-            <li v-for="(card, index) in results.list" :key="index">
-            <p>{{results.name}}</p>
-            </li>
-        </ul> -->
 
-        <!-- <li v-for="item in results.cards" :key="item.id">{{item.name}}<img :src="item.imageUrl"></li> -->
+        <div class="results-message">
+            <h2 v-if="results && results.length > 0">{{ results.length }} Cards Found</h2>
+            <div v-else-if="searches !==0 && results && results.length === 0" class="no-results">
+                <h2>No Cards Found</h2>
+                <p>Please adjust your search and try again</p>
+            </div>
+        </div>
+        <div class="messages">
+            <message-container v-bind:messages="messages"></message-container>
+        </div>
+        
+        <transition-group name="fade" tag="div" appear>
         <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl"></CardViewer>
+        </transition-group>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import CardViewer from '@/components/CardViewer'
+    //Note: SDK is not currently utilized
     const mtg = require('mtgsdk')
+    // Note: vue2-animate is added using the require statement because it is a CSS file
+    require('vue2-animate/dist/vue2-animate.min.css');
+    import MessageContainer from '@/components/MessageContainer';
 
     export default {
         name: "finder",
         components: {
-            CardViewer
+            CardViewer,
+            'message-container': MessageContainer
         },
         data () {
             return {
                 results: [],
-                errors: [],
-                cardName: ''
+                messages: [],
+                cardName: '',
+                searches: 0
             }
         },
         methods: {
@@ -50,8 +63,13 @@
                     console.log(response)
                 })
                 .catch(error =>{
-                    this.errors.push(error)
-                });
+                    this.messages.push({
+                        type: 'error',
+                        text: error.message
+                    });
+                })
+                //hides inital no cards message TODO:Hide until spinner completes
+                this.searches++;
 
             }
         }
@@ -62,6 +80,10 @@
 
 ul {
   list-style-type: none;
+}
+
+.results-message {
+  clear: both;
 }
 
 </style>
