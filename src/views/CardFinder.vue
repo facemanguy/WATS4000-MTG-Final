@@ -12,8 +12,8 @@
         </form>
 
         <div class="results-message">
-            <h2 v-if="results && results.length > 0">{{ results.length }} Cards Found</h2>
-            <div v-else-if="searches !==0 && results && results.length === 0" class="no-results">
+            <loader v-if="showLoader === true"></loader>
+            <div v-else-if="searches !==0 && results.cards.length === 0" class="no-results">
                 <h2>No Cards Found</h2>
                 <p>Please adjust your search and try again</p>
             </div>
@@ -36,23 +36,27 @@
     // Note: vue2-animate is added using the require statement because it is a CSS file
     require('vue2-animate/dist/vue2-animate.min.css');
     import MessageContainer from '@/components/MessageContainer';
+    import CircleLoader from '@/components/CircleLoader';
 
     export default {
         name: "finder",
         components: {
             CardViewer,
-            'message-container': MessageContainer
+            'message-container': MessageContainer,
+            loader: CircleLoader
         },
         data () {
             return {
                 results: [],
                 messages: [],
                 cardName: '',
-                searches: 0
+                searches: 0,
+                showLoader: false
             }
         },
         methods: {
             findCards: function () {
+                this.showLoader = true;
                 axios.get('https://api.magicthegathering.io/v1/cards/',{
                     params: {
                         name: this.cardName
@@ -61,14 +65,16 @@
                 .then(response =>{
                     this.results = response.data
                     console.log(response)
+                    this.showLoader = false;
                 })
                 .catch(error =>{
+                    this.showLoader = false;
                     this.messages.push({
                         type: 'error',
                         text: error.message
                     });
                 })
-                //hides inital no cards message TODO:Hide until spinner completes
+                //hides inital no cards message
                 this.searches++;
 
             }
@@ -82,8 +88,13 @@ ul {
   list-style-type: none;
 }
 
+.no-results {
+    clear: none;
+    display: inline-block;
+}
+
 .results-message {
-  clear: both;
+    clear: both;
 }
 
 </style>
