@@ -59,13 +59,26 @@
                 showLoader: false,
                 selected: 'none',
                 setOptions: [
-                { text: 'Khans of Tarkir', value: 'ktk' },
-                { text: 'Time Spiral', value: 'tsp'},
-                { text: 'Unglued', value: 'UGL'},
-                { text: 'Amonkhet', value:'AKH'},
                 { text: 'Aether Revolt', value: 'AER'},
+                { text: 'Amonkhet', value:'AKH'},
                 { text: 'Battle for Zendikar', value: 'BFZ'},
-                { text: 'Ixalan', value: 'XLN'}
+                { text: 'Coldsnap', value: 'CSP'},
+                { text: 'Conspiracy', value: 'CNS'},
+                { text: 'Dominaria', value: 'DOM'},
+                { text: 'Guildpact', value: 'GPT'},
+                { text: 'Ixalan', value: 'XLN'},
+                { text: 'Kaladesh', value: 'KLD'},
+                { text: 'Khans of Tarkir', value: 'KTK' },
+                { text: 'Mirrodin Besieged', value: 'MBS'},
+                { text: 'Ravnica: City of Guilds', value: 'RAV'},
+                { text: 'Return to Ravnica', value: 'RTR'},
+                { text: 'Rise of the Eldrazi', value: 'ROE'},
+                { text: 'Saviors of Kamigawa', value: 'SOK'},
+                { text: 'Scars of Mirrodin', value: 'SOM'},
+                { text: 'Theros', value: 'THS'},
+                { text: 'Time Spiral', value: 'TSP'},
+                { text: 'Unglued', value: 'UGL'},
+                { text: 'Unhinged', value: 'UNH'}
                 ]
             }
         },

@@ -6,7 +6,19 @@
             <ul>
                 <li><label>Name <input v-model="cardName" type="text" placeholder="Nissa"></label></li>
                 <li><label>CMC <input v-model="cardCMC" type="number" placeholder="5"></label></li>
-                <li><label>Type <input v-model="cardType" type="text" placeholder="Creature"></label></li>
+                <li>
+                    <label>Type 
+                        <select v-model="cardType">
+                            <option disabled value="">Any</option>
+                            <option>Creature</option>
+                            <option>Instant</option>
+                            <option>Sorcery</option>
+                            <option>Enchantment</option>
+                            <option>Artifact</option>
+                            <option>Planeswalker</option>
+                        </select>
+                    </label>
+                </li>
             </ul>
             <button type="submit">Go</button>
         </form>
