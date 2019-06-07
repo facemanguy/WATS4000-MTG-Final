@@ -3,9 +3,8 @@
         <h1>Magic: The Gathering Booster Pack Simulator</h1>
         <form v-on:submit.prevent="getPack">
             <p>Pick a set to generate a random Booster Pack</p>
-            <!-- <ul>
-                <li><label>Name <input v-model="setName" type="text" placeholder="Core2015"></label></li>
-            </ul> -->
+            <em>Not all sets are currently supported, You may recieve an error</em>
+            <br>
             <select v-model.trim="setName">
                 <option v-for="option in setOptions" :key="option.id" v-bind:value="option.value">
                     {{ option.text }}
@@ -19,7 +18,7 @@
 
         <div class="results-message">
             <loader v-if="showLoader === true"></loader>
-            <div v-else-if="searches !==0 && results.cards.length === 0" class="no-results">
+            <div v-else-if="searches !==0 && results.cards && results.cards.length === 0" class="no-results">
                 <h2>No Cards Found</h2>
                 <p>Please adjust your search and try again</p>
             </div>
@@ -61,21 +60,26 @@
                 selected: 'none',
                 setOptions: [
                 { text: 'Khans of Tarkir', value: 'ktk' },
-                { text: 'Shadows over Innistrad', value: 'soi' },
-                { text: 'Dark Ascenscion', value: 'dka' },
-                { text: 'Magic 2014', value: 'M14'}
+                { text: 'Time Spiral', value: 'tsp'},
+                { text: 'Unglued', value: 'UGL'},
+                { text: 'Amonkhet', value:'AKH'},
+                { text: 'Aether Revolt', value: 'AER'},
+                { text: 'Battle for Zendikar', value: 'BFZ'},
+                { text: 'Ixalan', value: 'XLN'}
                 ]
             }
         },
         methods: {
             getPack: function () {
                 this.showLoader = true;
+                console.log('set test begin')
                 //Note: Backticks are needed to make variable call
-                axios.get('https://api.magicthegathering.io/v1/sets/'+`${this.setName}`+'/booster')
+                axios.get(`https://api.magicthegathering.io/v1/sets/${this.setName}/booster`)
                 .then(response =>{
                     this.results = response.data
                     console.log(response)
                     this.showLoader = false;
+                    this.setName = '';
                 })
                 .catch(error =>{
                     this.showLoader = false;
@@ -83,6 +87,7 @@
                         type: 'error',
                         text: error.message
                     });
+                    this.setName = '';
                 })
                 //hides inital no cards message
                 this.searches++;
