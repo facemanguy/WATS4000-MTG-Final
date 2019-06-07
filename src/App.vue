@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <img id="logo" alt="Magic The Gathering logo" src="./assets/Magic-the-Gathering-Logo.png">
     <router-view/>
   </div>
 </template>
@@ -21,5 +21,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#logo {
+  margin: 0 auto;
 }
 </style>
