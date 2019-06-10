@@ -37,7 +37,7 @@
         </div>
         
         <transition-group name="fade" tag="div" appear>
-        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl" :cmc="item.cmc" :type="item.types"></CardViewer>
+        <CardViewer v-for="item in results.cards" :key="item.id" :name="item.name" :image="item.imageUrl" :cmc="item.cmc" :type="item.types" :blockName="item.setName" ></CardViewer>
         </transition-group>
     </div>
 </template>
